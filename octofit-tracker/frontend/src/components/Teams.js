@@ -19,7 +19,10 @@ export default function Teams({ getApiBase }) {
         const results = Array.isArray(data) ? data : (data && data.results) ? data.results : []
         setItems(results.length ? results : sampleTeams)
       })
-      .catch(err => console.error('[Teams] Fetch error', err))
+      .catch(err => {
+        console.error('[Teams] Fetch error', err)
+        setItems(sampleTeams)
+      })
   }, [getApiBase])
 
   return (

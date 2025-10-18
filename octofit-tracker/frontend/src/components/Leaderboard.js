@@ -19,7 +19,10 @@ export default function Leaderboard({ getApiBase }) {
         const results = Array.isArray(data) ? data : (data && data.results) ? data.results : []
         setItems(results.length ? results : sampleLeaderboard)
       })
-      .catch(err => console.error('[Leaderboard] Fetch error', err))
+      .catch(err => {
+        console.error('[Leaderboard] Fetch error', err)
+        setItems(sampleLeaderboard)
+      })
   }, [getApiBase])
 
   return (

@@ -7,7 +7,7 @@ function buildEndpoint(getApiBase, path) {
 }
 
 export default function Activities({ getApiBase }) {
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(sampleActivities)
 
   useEffect(() => {
     const endpoint = buildEndpoint(getApiBase, 'activities')
@@ -19,7 +19,10 @@ export default function Activities({ getApiBase }) {
         const results = Array.isArray(data) ? data : (data && data.results) ? data.results : []
         setItems(results.length ? results : sampleActivities)
       })
-      .catch(err => console.error('[Activities] Fetch error', err))
+      .catch(err => {
+        console.error('[Activities] Fetch error', err)
+        setItems(sampleActivities)
+      })
   }, [getApiBase])
 
   return (

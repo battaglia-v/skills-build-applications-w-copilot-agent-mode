@@ -9,6 +9,8 @@ function buildEndpoint(getApiBase, path) {
 
 export default function Workouts({ getApiBase }) {
   const [items, setItems] = useState([])
+  // initialize with sample so UI populates immediately when API is unavailable
+  useEffect(()=>{ if(!items || items.length===0) setItems(sampleWorkouts) }, [])
   const [filter, setFilter] = useState('')
   const [selected, setSelected] = useState(null)
 
@@ -17,7 +19,7 @@ export default function Workouts({ getApiBase }) {
     fetch(endpoint)
       .then(r => r.json())
       .then(data => setItems((Array.isArray(data) ? data : (data && data.results) ? data.results : []).length ? (Array.isArray(data) ? data : (data && data.results) ? data.results : []) : sampleWorkouts))
-      .catch(err => console.error(err))
+      .catch(err => { console.error('[Workouts] Fetch error', err); setItems(sampleWorkouts) })
   }
 
   useEffect(() => { fetchData() }, [getApiBase])

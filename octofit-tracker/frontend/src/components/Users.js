@@ -19,7 +19,10 @@ export default function Users({ getApiBase }) {
         const results = Array.isArray(data) ? data : (data && data.results) ? data.results : []
         setItems(results.length ? results : sampleUsers)
       })
-      .catch(err => console.error('[Users] Fetch error', err))
+      .catch(err => {
+        console.error('[Users] Fetch error', err)
+        setItems(sampleUsers)
+      })
   }, [getApiBase])
 
   return (
